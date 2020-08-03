@@ -1,0 +1,26 @@
+{
+  "name": "api1-project",
+  "version": "1.0.0",
+  "description": "1st guided project node API",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emilioramirezeguia/node-api1-project.git"
+  },
+  "author": "Emilio Ramirez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emilioramirezeguia/node-api1-project/issues"
+  },
+  "homepage": "https://github.com/emilioramirezeguia/node-api1-project#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
