@@ -18,11 +18,11 @@ server.post("/api/users", (req, res) => {
   if (!user.name) {
     res
       .status(400)
-      .json({ errorMessage: "Please provide a name for the user" });
+      .json({ errorMessage: "Please provide a name for the user." });
   } else if (!user.bio) {
     res
       .status(400)
-      .json({ errorMessage: "Don't forget to add the user's bio" });
+      .json({ errorMessage: "Don't forget to add the user's bio." });
   }
 
   user.id = shortid();
@@ -31,25 +31,49 @@ server.post("/api/users", (req, res) => {
 
   res
     .status(201)
-    .json({ successMessage: "Successfully created user", user: user });
+    .json({ successMessage: "Successfully created user.", user: user });
 });
 
 // Get a list of users
 server.get("/api/users", (req, res) => {
-  res.status(200).json(users);
+  try {
+    if (users.length) {
+      res
+        .status(200)
+        .json({ successMessage: "Here's your list of users.", users: users });
+    } else {
+      res.status(200).json({ successMessage: "No users created yet." });
+    }
+  } catch (error) {
+    res.status(500).json({
+      errorMessage: "There was an error retrieving the list of users.",
+    });
+  }
 });
 
 // Get a user with a specified id
 server.get("/api/users/:id", (req, res) => {
-  const userID = req.params.id.toLocaleLowerCase();
+  try {
+    const userID = req.params.id;
+    console.log("Searching for user ID: ", userID);
 
-  users.map((user) => {
-    if (user.id.toLocaleLowerCase() === userID) {
-      res.status(200);
-    } else {
-      res.status(404).send(`User with ID ${userID} not found.`);
-    }
-  });
+    users.map((user) => {
+      if (user.id === userID) {
+        res.status(200).json({
+          successMessage: `Here's the user with ID '${userID}'.`,
+          user: user,
+        });
+      } else {
+        res
+          .status(404)
+          .json({ errorMessage: `User with ID '${userID}' was not found.` });
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      errorMessage: "There was an error retrieving the user's information.",
+    });
+  }
 });
 
 const port = 8000;
